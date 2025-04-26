@@ -1,0 +1,67 @@
+### 请求 /menu/list 接口 => 成功
+GET {{baseUrl}}/system/dict-data/list-all-simple
+Authorization: Bearer {{token}}
+
+###
+GET {{baseUrl}}/system/dept/list-all-simple
+Authorization: Bearer {{token}}
+#
+{
+  "code": 0,
+  "data": [
+    {
+      "id": 100,
+      "name": "源码乐园",
+      "parentId": 0
+    },
+    {
+      "id": 101,
+      "name": "深圳总公司",
+      "parentId": 100
+    },
+    {
+      "id": 103,
+      "name": "研发科室",
+      "parentId": 101
+    },
+    {
+      "id": 108,
+      "name": "市场科室",
+      "parentId": 102
+    },
+    {
+      "id": 102,
+      "name": "长沙分公司",
+      "parentId": 100
+    },
+    {
+      "id": 104,
+      "name": "市场科室",
+      "parentId": 101
+    },
+    {
+      "id": 109,
+      "name": "财务科室",
+      "parentId": 102
+    },
+    {
+      "id": 105,
+      "name": "测试科室",
+      "parentId": 101
+    },
+    {
+      "id": 106,
+      "name": "财务科室",
+      "parentId": 101
+    },
+    {
+      "id": 107,
+      "name": "运维科室",
+      "parentId": 101
+    }
+  ],
+  "msg": ""
+}
+
+Response code: 200; Time: 54ms; Content length: 428 bytes
+###

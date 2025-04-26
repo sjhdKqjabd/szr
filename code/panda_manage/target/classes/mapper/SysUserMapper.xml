@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandahis.dashboard.modules.system.dal.mysql.user.SysUserMapper">
+
+
+
+    <select id="queryUserByRoleCode"
+            parameterType="com.pandahis.dashboard.modules.system.controller.user.vo.user.SysUserPageReqVO"
+            resultType="com.pandahis.dashboard.modules.system.dal.dataobject.user.SysUserDO">
+         SELECT
+            su.*
+        FROM
+            sys_user su
+            LEFT JOIN sys_user_role sur ON su.id = sur.user_id
+            LEFT JOIN sys_role sr ON sr.id = sur.role_id
+        WHERE
+            sr.CODE = #{vo.roleCode}
+            <if test="vo.username!=null and vo.username !=''">
+                and su.username like '%${vo.username}%'
+            </if>
+
+    </select>
+
+
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandahis.dashboard.modules.dev.sendMsg.dal.mysql.sendMsg.PandaSendMsgMapper">
+
+
+
+    <select id="getSendMsgWithEachOther"
+            parameterType="com.pandahis.dashboard.modules.dev.sendMsg.dal.dataobject.sendMsg.PandaSendMsgDO"
+            resultType="com.pandahis.dashboard.modules.dev.sendMsg.dal.dataobject.sendMsg.PandaSendMsgDO">
+        select *  from   panda_send_msg  where
+        (to_contact_id=#{pandaSendMsgDO.toContactId}  and  from_user_id=#{pandaSendMsgDO.fromUserId})
+        or
+        (
+          from_user_id=#{pandaSendMsgDO.toContactId}  and  to_contact_id=#{pandaSendMsgDO.fromUserId}
+        )
+        order by create_time asc
+    </select>
+
+
+    <update id="updateReadedToUserIdAndFromUserId">
+       update  panda_send_msg set readed='Y'  where to_contact_id=#{fromUserId} and from_user_id=#{toContactId}
+  </update>
+
+    <update id="updateAllReaded"  >
+       update  panda_send_msg set readed='Y'
+       where
+        id in
+        <foreach collection="msgDos" open="(" close=")"   separator="," item="each">
+              #{each.id}
+        </foreach>
+    </update>
+
+    <select id="getSendMsgWithEachOtherUnreaded"
+            parameterType="com.pandahis.dashboard.modules.dev.sendMsg.dal.dataobject.sendMsg.PandaSendMsgDO"
+            resultType="com.pandahis.dashboard.modules.dev.sendMsg.dal.dataobject.sendMsg.PandaSendMsgDO">
+        select *  from   panda_send_msg  where
+        (
+            (to_contact_id=#{pandaSendMsgDO.toContactId}  and  from_user_id=#{pandaSendMsgDO.fromUserId})
+            or
+            (
+              from_user_id=#{pandaSendMsgDO.toContactId}  and  to_contact_id=#{pandaSendMsgDO.fromUserId}
+            )
+        )
+        and readed='N'
+        order by create_time asc
+    </select><select id="selectUnReadFromUserIdAndToUserId" resultType="com.pandahis.dashboard.modules.dev.sendMsg.dal.dataobject.sendMsg.PandaSendMsgDO">
+     select *  from   panda_send_msg  where
+       from_user_id=#{toContactId}  and  to_contact_id=#{fromUserId}
+        and readed='N'
+        order by create_time desc
+   </select>
+
+   <update id="updateSelectUnReadFromUserIdAndToUserId">
+        update   panda_send_msg  set readed='Y' where
+        from_user_id=#{toContactId}  and  to_contact_id=#{fromUserId}
+        and readed='N'
+        order by create_time desc
+</update>
+
+</mapper>
